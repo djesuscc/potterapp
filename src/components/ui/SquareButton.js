@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export const SquareButton = ({ title, onClick }) => {
+const SquareButton = ({ title, onClick }) => {
   return (
     
     <button
@@ -14,3 +15,14 @@ export const SquareButton = ({ title, onClick }) => {
     </button>
   )
 }
+
+SquareButton.propTypes = {
+  title: PropTypes.string,
+  onClick: PropTypes.func,
+}
+
+SquareButton.defaultProps = {
+  title: "Set Name of Button",
+  onClick: () => {},
+}
+export default SquareButton;

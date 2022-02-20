@@ -17,3 +17,21 @@ const storeCharacters = (characters) => ({
     type: types.receiveCharacters,
     payload: characters,
 });
+
+export const setFavoriteCharacter = (character) => {
+    return (dispatch, getState) => {
+        const {
+                characterReducer: { favoriteCharacters },
+            } = getState();
+        if (favoriteCharacters.length < 5) {
+            const isFavCharacter = favoriteCharacters.find((fav) => fav.index === character.index);
+            if (!isFavCharacter) {
+                dispatch(storeFavoriteCharacter(character));
+            }
+        }
+    }
+}
+export const storeFavoriteCharacter = (character) => ({
+    type: types.addFavCharacter,
+    payload: character,
+})

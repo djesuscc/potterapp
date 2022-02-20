@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { routeImage } from '../../helpers/routeImage';
+import { setFavoriteCharacter } from '../../actions/characters';
 
 const Card = (props) => {
+    const dispatch = useDispatch();
+    const { favoriteCharacters } = useSelector( state => state.characterReducer );
     const {
         name,
         alive,
@@ -39,7 +43,10 @@ const Card = (props) => {
         }
         setHouseColor(gradient);
     }, [ house ])
-    console.log(props)
+
+    const handleClickFavBtn = () => {
+        dispatch(setFavoriteCharacter(props))
+    }
     return (
         <div
             className='card'
@@ -70,7 +77,8 @@ const Card = (props) => {
                         {hogwartsStaff && 'STAFF'}
                         {hogwartsStudent && 'ESTUDIANTE'}
                     </p>
-                    <img src={routeImage('./icon-fav.png')} alt="icon" />
+                    
+                    <img onClick={handleClickFavBtn} src={routeImage('./icon-fav.png')} alt="icon" />
                 </div>
                 <div className='mobile'>
                     <div>
@@ -82,7 +90,7 @@ const Card = (props) => {
                             {hogwartsStudent && 'ESTUDIANTE'}
                         </p>
                     </div>
-                    <img src={routeImage('./icon-fav.png')} alt="icon" />
+                    <img onClick={handleClickFavBtn} src={routeImage('./icon-fav.png')} alt="icon" />
                 </div>
                 <h1 className='truncate'>
                     {name}
