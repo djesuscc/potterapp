@@ -70,7 +70,7 @@
       "actor": "Katie Leung",
       "alive": true,
       "image": "http://hp-api.herokuapp.com/images/cho.jpg",
-      "isFavorite": true
+      "isFavorite": false
     },
     {
       "id": 4,
@@ -98,7 +98,7 @@
     },
     {
       "name": "Hermione Granger",
-      "image": "",
+      "image": "https://res.cloudinary.com/djesuscc/image/upload/v1645429965/a5zmkiuzbactes30y4og.jpg",
       "eyeColour": "brown",
       "hairColour": "brown",
       "dateOfBirth": "1979-09-19",
@@ -110,6 +110,21 @@
       "hogwartsStaff": false,
       "isFavorite": false,
       "id": 5
+    },
+    {
+      "name": "Luna Lovegood",
+      "image": "https://res.cloudinary.com/djesuscc/image/upload/v1645430534/d2hfigih4yjwpm1nmjzl.jpg",
+      "eyeColour": "grey",
+      "hairColour": "blonde",
+      "dateOfBirth": "1981-02-13",
+      "house": "Ravenclaw",
+      "alive": true,
+      "gender": "female",
+      "position": "student",
+      "hogwartsStudent": true,
+      "hogwartsStaff": false,
+      "isFavorite": true,
+      "id": 6
     }
   ]
 }

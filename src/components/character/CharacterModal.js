@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import Modal from 'react-modal';
@@ -8,19 +8,22 @@ import SquareButton from '../ui/SquareButton';
 import StyledInputs from '../ui/StyledInputs';
 import { postNewCharacter } from '../../actions/characters';
 
+
 const CharacterModal = ({ isModalOpen, setIsModalOpen }) => {
     const dispatch = useDispatch();
-    const [formValues, handleInputChange] = useForm({
+    const [imageSelected, setImageSelected] = useState();
+    const initFormValues = {
         name: '',
         image: '',
         eyeColour: '',
         hairColour: '',
         dateOfBirth: '',
-    });
+    }
+    
+    const [formValues, handleInputChange, resetValues] = useForm(initFormValues);
 
     const {
         name,
-        image,
         eyeColour,
         hairColour,
         dateOfBirth,
@@ -32,9 +35,16 @@ const CharacterModal = ({ isModalOpen, setIsModalOpen }) => {
 
     const handleSubmitForm = (e) => {
         e.preventDefault();
-        console.log("Submit", formValues);
+        formValues.image = imageSelected;
         dispatch(postNewCharacter(formValues));
+        setIsModalOpen(false);
+        resetValues();
     }
+
+    const handleSelectImage = ({ target }) => {
+        setImageSelected(target.files[0]);
+    }
+
     return (
         <Modal
             isOpen={isModalOpen}
@@ -169,13 +179,12 @@ const CharacterModal = ({ isModalOpen, setIsModalOpen }) => {
                 </div>
                 <div className='section-file'>
                     <input
-                        value={image}
                         type="file"
                         name='file'
                         id='file'
                         className='input-file'
                         accept="image/png, image/jpeg"
-                        onChange={handleInputChange}
+                        onChange={handleSelectImage}
                     />
                     <label htmlFor="file">FOTOGRAFIA (input type file)</label>
                 </div>

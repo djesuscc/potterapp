@@ -1,4 +1,5 @@
 import fetchData from "../helpers/fetch";
+import { fileUpload } from "../helpers/fileUpload";
 import { types } from "../types/types";
 
 export const getCharacters = () => {
@@ -21,7 +22,7 @@ const storeCharacters = (characters) => ({
 export const postNewCharacter = (character) => {
     return async (dispatch) => {
         try {
-            const { alive, position } = character;
+            const { alive, position, image } = character;
             const data = {
                 ...character,
                 alive: Boolean(alive),
@@ -29,6 +30,8 @@ export const postNewCharacter = (character) => {
                 hogwartsStaff: position === "staff",
                 isFavorite: false,
             }
+            const fileUrl = await fileUpload(image);
+            data.image = fileUrl;
             const response = await fetchData('characters', data, 'POST');
             const body = await response.json();
             dispatch(setNewCharacter(body));
@@ -38,13 +41,13 @@ export const postNewCharacter = (character) => {
     }
 }
 
+
 export const setNewCharacter = (newCharacter) => ({
     type: types.addNewCharacter,
     payload: newCharacter,
 })
 
 export const setFavoriteCharacter = (character) => {
-    console.log(character)
     return async (dispatch, getState) => {
         try {
             const {
