@@ -18,11 +18,11 @@ export const characterReducer = (state = initialState, action) => {
                 ...state,
                 characters: [...state.characters, action.payload]
             }
-        case types.addFavCharacter:
+        case types.updateFavCharacter:
             return {
                 ...state,
                 characters: state.characters.map(
-                    (character) => (character.name === action.payload.name) ? action.payload : character
+                    (character) => (character.id === action.payload.id) ? action.payload : character
                 )
             }
         default:

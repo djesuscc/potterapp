@@ -53,7 +53,7 @@ export const setFavoriteCharacter = (character) => {
             const favoriteCharacters = characters.filter((ch) => ch.isFavorite);
             let characterToUpdate = {};
             if (favoriteCharacters.length < 5) {
-                if (favoriteCharacters.length) {
+                if (favoriteCharacters.length > 0) {
                     const existCharacter = favoriteCharacters.find((fav) => fav.id === character.id);
                     if (!existCharacter) {
                         characterToUpdate = characters.find((ch) => ch.id === character.id);
@@ -72,9 +72,22 @@ export const setFavoriteCharacter = (character) => {
             console.error(err);
         }
     }
+};
+
+export const removeFavoriteCharacter = (id, characterToUpdate) => {
+    return async (dispatch) => {
+        try {
+            characterToUpdate.isFavorite = false;
+            const response = await fetchData(`characters/${id}`, characterToUpdate, "PUT");
+            const body = await response.json();
+            dispatch(updateToFavoriteCharacter(body));
+        } catch (err) {
+            console.error(err);
+        }
+    }
 }
 
 const updateToFavoriteCharacter = (characterToUpdate) => ({
-    type: types.addFavCharacter,
+    type: types.updateFavCharacter,
     payload: characterToUpdate,
-})
+});

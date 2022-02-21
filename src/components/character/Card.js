@@ -105,7 +105,7 @@ const Card = (props) => {
                     />
                 </div>
                 <h1 className='truncate'>
-                    {name}
+                    {!alive && '+ '}{name}
                 </h1>
                 <ul>
                     <li>

@@ -108,7 +108,7 @@
       "position": "student",
       "hogwartsStudent": true,
       "hogwartsStaff": false,
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 5
     }
   ]

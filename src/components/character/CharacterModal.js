@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import Modal from 'react-modal';
 import { routeImage } from '../../helpers/routeImage';
@@ -7,9 +8,8 @@ import SquareButton from '../ui/SquareButton';
 import StyledInputs from '../ui/StyledInputs';
 import { postNewCharacter } from '../../actions/characters';
 
-const CharacterModal = () => {
+const CharacterModal = ({ isModalOpen, setIsModalOpen }) => {
     const dispatch = useDispatch();
-    const [isModalOpen, setIsModalOpen] = useState(true);
     const [formValues, handleInputChange] = useForm({
         name: '',
         image: '',
@@ -185,6 +185,16 @@ const CharacterModal = () => {
             </form>
         </Modal>
     )
+}
+
+CharacterModal.propTypes = {
+    isModalOpen: PropTypes.bool,
+    setIsModalOpen: PropTypes.func,
+}
+
+CharacterModal.defaultProps = {
+    isModalOpen: false,
+    setIsModalOpen: () => {},
 }
 
 export default CharacterModal;
