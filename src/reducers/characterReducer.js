@@ -3,7 +3,6 @@ import { types } from "../types/types";
 const initialState = {
     characters: [],
     loaded: false,
-    favoriteCharacters: [],
 }
 
 export const characterReducer = (state = initialState, action) => {
@@ -14,13 +13,17 @@ export const characterReducer = (state = initialState, action) => {
                 characters: action.payload,
                 loaded: true,
             }
+        case types.addNewCharacter:
+            return {
+                ...state,
+                characters: [...state.characters, action.payload]
+            }
         case types.addFavCharacter:
             return {
                 ...state,
-                favoriteCharacters: [
-                    ...state.favoriteCharacters,
-                    action.payload,
-                ]
+                characters: state.characters.map(
+                    (character) => (character.name === action.payload.name) ? action.payload : character
+                )
             }
         default:
             return state;

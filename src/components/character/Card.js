@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { routeImage } from '../../helpers/routeImage';
 import { setFavoriteCharacter } from '../../actions/characters';
 
 const Card = (props) => {
     const dispatch = useDispatch();
-    const { favoriteCharacters } = useSelector( state => state.characterReducer );
     const {
         name,
         alive,
@@ -16,6 +15,7 @@ const Card = (props) => {
         gender,
         eyeColour,
         hairColour,
+        isFavorite,
         dateOfBirth,
         hogwartsStaff,
         hogwartsStudent,
@@ -45,8 +45,12 @@ const Card = (props) => {
     }, [ house ])
 
     const handleClickFavBtn = () => {
-        dispatch(setFavoriteCharacter(props))
+        if (!isFavorite) {
+            dispatch(setFavoriteCharacter(props))
+        }
     }
+    const icon = isFavorite ? './icon-dark-fav.png' : './icon-light-fav.png';
+
     return (
         <div
             className='card'
@@ -78,7 +82,11 @@ const Card = (props) => {
                         {hogwartsStudent && 'ESTUDIANTE'}
                     </p>
                     
-                    <img onClick={handleClickFavBtn} src={routeImage('./icon-fav.png')} alt="icon" />
+                    <img
+                        onClick={handleClickFavBtn}
+                        src={routeImage(icon)}
+                        alt="icon"
+                    />
                 </div>
                 <div className='mobile'>
                     <div>
@@ -90,7 +98,11 @@ const Card = (props) => {
                             {hogwartsStudent && 'ESTUDIANTE'}
                         </p>
                     </div>
-                    <img onClick={handleClickFavBtn} src={routeImage('./icon-fav.png')} alt="icon" />
+                    <img
+                        onClick={handleClickFavBtn}
+                        src={routeImage(icon)}
+                        alt="icon"
+                    />
                 </div>
                 <h1 className='truncate'>
                     {name}
@@ -111,7 +123,7 @@ const Card = (props) => {
                         </span>
                     </li>
                     <li>
-                        <b>Color de ojos</b>
+                        <b>Color de ojos:</b>
                         &nbsp;
                         <span>
                             {eyeColour}
@@ -137,6 +149,7 @@ Card.propTypes = {
         house: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
         gender: PropTypes.string.isRequired,
+        isFavorite: PropTypes.bool.isRequired,
         eyeColour: PropTypes.string.isRequired,
         hairColour: PropTypes.string.isRequired,
         dateOfBirth: PropTypes.string.isRequired,

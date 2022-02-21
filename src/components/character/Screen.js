@@ -4,6 +4,7 @@ import { getCharacters } from '../../actions/characters';
 import { routeImage } from '../../helpers/routeImage';
 import SquareButton from '../ui/SquareButton';
 import Card from './Card';
+import CharacterModal from './CharacterModal';
 
 
 export const Screen = () => {
@@ -55,6 +56,7 @@ export const Screen = () => {
                     </div>
                 </>
             )}
+            <CharacterModal />
         </div>
     )
 }
