@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SquareButton = ({ title, onClick, type }) => {
+const SquareButton = ({ title, onClick, type, className }) => {
   return (
     
     <button
-        className='squareButton'
+        className={`${className} squareButton`}
         type={type}
         onClick={onClick}
     >

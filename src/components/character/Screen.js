@@ -23,7 +23,7 @@ export const Screen = () => {
     useEffect(() => {
         const filterGroup = fetchCharacters.filter((character) => character[groupSelected]);
         const characters = filterGroup.length ? filterGroup : fetchCharacters
-
+        console.log("EVENT >>", characters)
         setGroupCharacters(characters);
     }, [ groupSelected, fetchCharacters ])
 
@@ -39,10 +39,12 @@ export const Screen = () => {
                         <SquareButton
                             title="Estudiantes"
                             onClick={() => setGroupSelected("hogwartsStudent")}
+                            className={groupSelected === "hogwartsStudent" && "active"}
                         />
                         <SquareButton
                             title="Staff"
                             onClick={() => setGroupSelected("hogwartsStaff")}
+                            className={groupSelected === "hogwartsStaff" && "active"}
                         />
                     </div>
                     <div className='content-cards'>
