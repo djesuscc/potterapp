@@ -1,4 +1,5 @@
-const baseUrl = "http://localhost:3000";
+const baseUrl = process.env.NODE_ENV === "production"
+    ? "https://potterapp.herokuapp.com" : "http://localhost:3000";
 const fetchData = (path, data, method = "GET") => {
     const url = `${baseUrl}/${path}`;
     if (method === "GET") {
