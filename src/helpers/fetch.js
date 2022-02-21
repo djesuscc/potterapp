@@ -1,4 +1,4 @@
-const baseUrl = process.env.REACT_APP_API_URL;
+const baseUrl = "http://localhost:3000";
 const fetchData = (path, data, method = "GET") => {
     const url = `${baseUrl}/${path}`;
     if (method === "GET") {

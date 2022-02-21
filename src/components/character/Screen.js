@@ -26,7 +26,7 @@ export const Screen = () => {
 
         setGroupCharacters(characters);
     }, [ groupSelected, fetchCharacters ])
-
+    console.log(process.env.NODE_ENV)
     return (
         <div className='screen'>
             <div className=''>
