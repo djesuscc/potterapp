@@ -1,30 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { routeImage } from '../../helpers/routeImage';
 import { setFavoriteCharacter } from '../../actions/characters';
 
-const Card = (props) => {
-    const dispatch = useDispatch();
-    const {
-        name,
-        alive,
-        index,
-        image,
-        house,
-        gender,
-        eyeColour,
-        hairColour,
-        isFavorite,
-        dateOfBirth,
-        hogwartsStaff,
-        hogwartsStudent,
-    } = props;
-    const [houseColor, setHouseColor] = useState("");
+class Card extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            houseColor: "",
+        };
+    }
 
-    useEffect(() => {
+    componentWillMount() {
         let gradient;
-        switch (house) {
+        switch (this.props.house) {
             case "Gryffindor":
                 gradient = 'linear-gradient(135deg, #FF0000 0%, #FED482 100%)';
                 break;
@@ -41,105 +31,122 @@ const Card = (props) => {
                 gradient = "";
                 break;
         }
-        setHouseColor(gradient);
-    }, [ house ])
+        this.setState({
+            houseColor: gradient,
+        });
+    }
 
-    const handleClickFavBtn = () => {
-        if (!isFavorite) {
-            dispatch(setFavoriteCharacter(props))
+
+    handleClickFavBtn = () => {
+        if (!this.props.isFavorite) {
+            this.props.setFavoriteCharacter(this.props);
         }
     }
-    const icon = isFavorite ? './icon-dark-fav.png' : './icon-light-fav.png';
-
-    return (
-        <div
-            className='card'
-            style={{
-                backgroundColor: alive ? '#FFF' : '#CCCCCC',
-                justifySelf: index%2 === 0 ? 'end' : 'start',
-            }}
-        >
+    render() {
+        const {
+            name,
+            alive,
+            index,
+            image,
+            gender,
+            eyeColour,
+            hairColour,
+            isFavorite,
+            dateOfBirth,
+            hogwartsStaff,
+            hogwartsStudent,
+        } = this.props;
+        const icon = isFavorite ? './icon-dark-fav.png' : './icon-light-fav.png';
+        return (
             <div
-                className='content-img'
+                className='card'
                 style={{
-                    background: houseColor
+                    backgroundColor: alive ? '#FFF' : '#CCCCCC',
+                    justifySelf: index%2 === 0 ? 'end' : 'start',
                 }}
             >
                 <div
-                    className='img'
+                    className='content-img'
                     style={{
-                        backgroundImage: `url(${image})`
+                        background: this.state.houseColor
                     }}
-                />
-            </div>
-
-            <div className='content-info'>
-                <div className='desktop'>
-                    <p className='truncate'>
-                        {alive ? 'VIVO' : 'FINADO'}
-                        /
-                        {hogwartsStaff && 'STAFF'}
-                        {hogwartsStudent && 'ESTUDIANTE'}
-                    </p>
-                    
-                    <img
-                        onClick={handleClickFavBtn}
-                        src={routeImage(icon)}
-                        alt="icon"
+                >
+                    <div
+                        className='img'
+                        style={{
+                            backgroundImage: `url(${image})`
+                        }}
                     />
                 </div>
-                <div className='mobile'>
-                    <div>
-                        <p>
+    
+                <div className='content-info'>
+                    <div className='desktop'>
+                        <p className='truncate'>
                             {alive ? 'VIVO' : 'FINADO'}
-                        </p>
-                        <p>
+                            /
                             {hogwartsStaff && 'STAFF'}
                             {hogwartsStudent && 'ESTUDIANTE'}
                         </p>
+                        
+                        <img
+                            onClick={this.handleClickFavBtn}
+                            src={routeImage(icon)}
+                            alt="icon"
+                        />
                     </div>
-                    <img
-                        onClick={handleClickFavBtn}
-                        src={routeImage(icon)}
-                        alt="icon"
-                    />
+                    <div className='mobile'>
+                        <div>
+                            <p>
+                                {alive ? 'VIVO' : 'FINADO'}
+                            </p>
+                            <p>
+                                {hogwartsStaff && 'STAFF'}
+                                {hogwartsStudent && 'ESTUDIANTE'}
+                            </p>
+                        </div>
+                        <img
+                            onClick={this.handleClickFavBtn}
+                            src={routeImage(icon)}
+                            alt="icon"
+                        />
+                    </div>
+                    <h1 className='truncate'>
+                        {!alive && '+ '}{name}
+                    </h1>
+                    <ul>
+                        <li>
+                            <b>Cumpleaños:</b>
+                            &nbsp;
+                            <span>
+                                {dateOfBirth}
+                            </span>
+                        </li>
+                        <li>
+                            <b>Género:</b>
+                            &nbsp;
+                            <span>
+                                {gender}
+                            </span>
+                        </li>
+                        <li>
+                            <b>Color de ojos:</b>
+                            &nbsp;
+                            <span>
+                                {eyeColour}
+                            </span>
+                        </li>
+                        <li>
+                            <b>Color de pelo:</b>
+                            &nbsp;
+                            <span>
+                                {hairColour}
+                            </span>
+                        </li>
+                    </ul>
                 </div>
-                <h1 className='truncate'>
-                    {!alive && '+ '}{name}
-                </h1>
-                <ul>
-                    <li>
-                        <b>Cumpleaños:</b>
-                        &nbsp;
-                        <span>
-                            {dateOfBirth}
-                        </span>
-                    </li>
-                    <li>
-                        <b>Género:</b>
-                        &nbsp;
-                        <span>
-                            {gender}
-                        </span>
-                    </li>
-                    <li>
-                        <b>Color de ojos:</b>
-                        &nbsp;
-                        <span>
-                            {eyeColour}
-                        </span>
-                    </li>
-                    <li>
-                        <b>Color de pelo:</b>
-                        &nbsp;
-                        <span>
-                            {hairColour}
-                        </span>
-                    </li>
-                </ul>
             </div>
-        </div>
-    );
+        );
+    }
 };
 
 Card.propTypes = {
@@ -158,4 +165,8 @@ Card.propTypes = {
     })
 }
 
-export default Card;
+const mapDispatchToProps = {
+    setFavoriteCharacter
+}
+
+export default connect(null, mapDispatchToProps)(Card);
